@@ -1,0 +1,1 @@
+In this lesson we will create a 3 page website that includes a "landing page", a simple form that shows at least 5 di8fferent input types and a results page.
