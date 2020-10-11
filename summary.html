@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<HTML>
+    <HEAD></HEAD>
+    <BODY>
+        <header>
+            <h1>Lesson 1 - Basic HTML with Javascript</h1>
+            <h2>Summary page</h2>
+        </header>
+        <main>
+            <section>
+                <h3>Personal Info</h3>
+                <div>First name: <span id="first-name"/></div>
+                <div>Last name: <span id="last-name"/></div>
+                <div>Gender: <span id="gender"/></div>
+            </section>
+            <section>
+                <h3>Transportation Info</h3>
+                <div>Transportation: <span id="tranport-list"></span></div>
+                <div id="car-type-wrapper">Car Type: <span id="car-type"/></div>
+            </section>
+            <section>
+                <h3>Work Info</h3>
+                <div>Work phone: <span id="workphone"/></div>
+                <div>Work start time: <span id="workhour"/></div>
+                <div>Work start week: <span id="workweek"/></div>
+                <div>Work email: <span id="workemail"/></div>
+            </section>
+            <section>
+                <h3>Preference Options</h3>
+                <div>Message: <span id="message"/></div>
+                <div>Homepage: <span id="homepage"/></div>
+                <div>Search: <span id="gsearch"/></div>
+            </section>
+            <section>
+                <h3>Attachments</h3>
+                <div>File name: <span id="filename"/></div>
+                <div>Size: <span id="size"/></div>
+                <div>Quantity: <span id="quantity"/></div>
+            </section>
+        </main>
+        
+<script>
+    const queryString = window.location.search.substring(1);
+    if(queryString != null && queryString.length > 0) {
+        console.log('query string', queryString);
+        const queryParams = JSON.parse(
+            '{"' 
+            + queryString.replace(
+                /&/g, '","').replace(/=/g,'":"') + '"}', 
+                function(key, value) { 
+                    return key===""?value:decodeURIComponent(value)
+                }
+            );
+        console.log('query params', queryParams);
+
+        document.getElementById('first-name').innerText = queryParams.fname;
+        document.getElementById('last-name').innerText = queryParams.lname;
+        document.getElementById('gender').innerText = queryParams.gender;
+        
+        // for the transportation option list
+        const tranportationOptions = [];
+        let carType = 'n/a';
+        if(queryParams['car-option'] != null) {
+            tranportationOptions.push('car')
+            carType = queryParams['car-type'];
+        }
+
+        if(queryParams['bike-option'] != null) {
+            tranportationOptions.push('bike')
+        }
+        tranportationString = tranportationOptions.join(', ')
+        if(tranportationString.length == 0) {
+            tranportationString = 'none';
+        }
+        console.log('transportationOptions', tranportationOptions);
+        console.log(`tranportationString = "${tranportationString}"`);
+        document.getElementById('tranport-list').innerText = tranportationString;
+
+        document.getElementById('car-type').innerText = carType;
+        //???console.log(queryParams.car-option);
+        //console.log(queryParams.workphone);
+        document.getElementById('workphone').innerText = queryParams.workphone;
+        //console.log(queryParams.workhour);
+        document.getElementById('workhour').innerText = queryParams.workhour;
+        //console.log(queryParams.workweek);
+        document.getElementById('workweek').innerText = queryParams.workweek;
+        //console.log(queryParams.workemail);
+        document.getElementById('workemail').innerText = queryParams.workemail;
+        //console.log(queryParams.message);
+        document.getElementById('message').innerText =
+            decodeURIComponent(queryParams.message).replaceAll('+', ' ').trim();
+        //???console.log(queryParams.homepage);
+        //???document.getElementsById('homepage').innerText = queryParams.homepage;
+        //console.log(queryParams.gsearch);
+        document.getElementById('gsearch').innerText = queryParams.gsearch;
+        //console.log(queryParams.filename);
+        document.getElementById('filename').innerText = queryParams.filename;
+        //console.log(queryParams.size);
+        document.getElementById('size').innerText = queryParams.size;
+        console.log(queryParams.quantity);
+        document.getElementById('quantity').innerText = queryParams.quantity;
+
+
+
+
+
+        //if (queryParams.car-type-wrapper != null && queryParams.car-type-wrapper.length > 0) {
+        //    console.log(queryParams.car-type);
+        //    //document.getElementsByName('car-type').innerText = queryParams.car-type;
+        //}
+
+    }
+</script>
+    </BODY>
+</HTML>
